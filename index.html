@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Tree Visualizer</title>
+    <link rel="icon" type="image/x-icon" href="/resources/favicon.ico">
+    <link rel="stylesheet" href="/styles/style.css">
+
+</head>
+
+<body>
+    <div id="header" style="position: relative;">
+        <div style="float:left; height: 60px;">
+            <img height="65" style="height: 65px;" alt="Tree" title="Tree" src="/resources/top_logo.png">
+        </div>
+        <br style="clear: both;">
+    </div>
+
+    <div class="roundbox h-align">
+        <ul style="list-style-type:none;">
+            <li><input type="text" id="dataVal" name="dataVal" placeholder="Value"></li>
+            <li class="insert-btn insert-btn-disabled" id="insert-left">
+                Insert Left
+            </li>
+            <li class="insert-btn insert-btn-disabled" id="insert-right">
+                Insert Right
+            </li>
+            <li class="insert-btn" id="insert-root">
+                Insert Root
+            </li>
+        </ul>
+    </div>
+    <br />
+
+    <div id="errMsg">
+
+    </div>
+    <div id="hint">Select a node to insert its left or right children</div>
+
+    <br />
+
+    <div class="roundbox" id="drawing-area">
+
+    </div>
+    <script src="src/src.js"></script>
+</body>
+
+</html>
