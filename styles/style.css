@@ -46,6 +46,8 @@ li {
     justify-content: center;
     align-items: center;
     background-color: antiquewhite;
+    position: absolute;
+    left: 0px;
 }
 
 .selected-circle {
@@ -54,8 +56,9 @@ li {
 
 #drawing-area {
     display: flex;
-    justify-content: center;
     overflow-x: auto;
+    flex-direction: column;
+    align-items: center;
 }
 
 #errMsg {
@@ -66,4 +69,12 @@ li {
 #hint {
     display: none;
     color: darkgreen
+}
+
+.tree-level {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    position: relative;
 }

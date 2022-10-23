@@ -6,31 +6,53 @@ let root = null;
 let selectedNode = null;
 let selectedNodeId;
 let mapping = [];
+let maxCharLen = 1;
 
 const height = (cur) => {
-    if (cur == null) return 0;
+    if (cur == null) return -1;
     return 1 + Math.max(height(cur.left), height(cur.right))
 }
+
 const renderTree = () => {
     document.getElementById('drawing-area').innerHTML = ""
-    let cur = root;
-    const ht = height(cur);
+    let cur = [root, 0, 0];
+    const ht = height(root);
+    if (ht == -1) return;
     let q = new Queue();
     q.enque(cur);
+    let level = 0;
+    const highest_width_of_circle = 20 + 8 * (maxCharLen - 1);
+    const unit_separation = 1 * highest_width_of_circle;
     while (!q.empty()) {
         cur = q.Front();
         q.deque();
-        if (cur.left != null)
-            q.enque(cur.left);
-        if (cur.right != null)
-            q.enque(cur.right);
-        document.getElementById('drawing-area').appendChild(getNodeCircle(cur));
+
+        if (cur[0].left != null)
+            q.enque([cur[0].left, cur[1] + 1, cur[2] - Math.pow(2, ht - level)]);
+        if (cur[0].right != null)
+            q.enque([cur[0].right, cur[1] + 1, cur[2] + Math.pow(2, ht - level)]);
+
+        if (cur[1] == level) {
+            document.getElementById('drawing-area').appendChild(getTreeLevelDiv(cur[1]));
+            level++;
+        }
+
+        const ele = getNodeCircle(cur[0], cur[2] * unit_separation);
+        document.getElementById('tree-level-' + cur[1]).appendChild(ele);
     }
     adjustSelectedNodeView();
     adjustBtnsVisibility();
 }
 
+const getTreeLevelDiv = (level) => {
+    const ele = document.createElement('div');
+    ele.id = "tree-level-" + level;
+    ele.classList.add("tree-level"); //define align center style for this div
+    return ele;
+}
+
 const insert = (val, left, right) => {
+    if (val && val.length > maxCharLen) maxCharLen = val.length;
     let t = null;
     if (root == null) {
         t = new TreeNode(val);
@@ -46,13 +68,14 @@ const insert = (val, left, right) => {
 }
 
 //first create node in tree, then getCircle
-const getNodeCircle = (node) => {
+const getNodeCircle = (node, displacement_from_left) => {
     const ind = mapping.findIndex(ele => ele === node);
     const circle = document.createElement('div');
     circle.classList.add('circle');
     circle.textContent = node.data;
     circle.addEventListener('click', nodeSelectionHandler);
     circle.style.cursor = 'pointer'
+    circle.style.left = displacement_from_left + 'px';
     circle.id = ind;
     return circle;
 }
